@@ -1,16 +1,38 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import { Helmet } from "react-helmet-async";
 
 const LogIn = () => {
+    const { logIn } = useAuth();
+    const location = useLocation();
+    console.log(location);
+    const navigate = useNavigate();
 
     const handleLogin = (e) => {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log(email, password);
+
+
+        logIn(email, password)
+            .then(res => {
+                console.log(res.user);
+
+                const dest = location.state?.from?.pathname || "/"
+                navigate(dest, { replace: true });
+            })
+            .catch(err => console.log(err))
     }
+
 
     return (
         <div>
+            <Helmet>
+                <title>
+                HostelMeals | LogIn
+                </title>
+            </Helmet>
             <div className="hero min-h-screen bg-slate-400">
 
                 <div className="card flex-shrink-0 w-full max-w-lg shadow-2xl  bg-base-100 rounded-none my-20">

@@ -1,15 +1,63 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const SignUp = () => {
-    const { register, handleSubmit, formState: { errors }, } = useForm()
+    const { register, handleSubmit, reset, formState: { errors } } = useForm()
+    const { signUp, updateUser } = useAuth();
+    const axiosPublic = useAxiosPublic();
+    const navigate = useNavigate();
 
     const onSubmit = (data) => {
         console.log(data);
+
+        signUp(data.email, data.password)
+            .then(res => {
+                console.log("user:", res.user);
+            })
+            .catch(err => console.log(err));
+
+        // update profile 
+        updateUser(data.name, data.photo)
+            .then(res => {
+                console.log("updated user:", res)
+                reset();
+
+                const profile = {
+                    name: data.name,
+                    email: data.email,
+                    image: data.photo,
+                }
+
+                axiosPublic.post("/users", profile)
+                    .then(res => {
+                        console.log('new user', res.data);
+
+                        if (res.data.insertedId) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Your account has been created",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            navigate("/");
+                        }
+                    })
+            })
+            .catch(err => console.log(err));
     }
 
     return (
         <div>
+            <Helmet>
+                <title>
+                HostelMeals | SignUp
+                </title>
+            </Helmet>
 
             <div className="hero min-h-screen bg-slate-400">
 

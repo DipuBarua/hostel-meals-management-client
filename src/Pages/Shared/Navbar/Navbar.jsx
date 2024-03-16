@@ -1,14 +1,38 @@
 import { Link } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
 
 const Navbar = () => {
+    const { user, logOut } = useAuth();
+
+    const handleSignOut = () => {
+        logOut();
+    }
+
     const navLinks = <>
         <li><Link to={'/'}>Home</Link></li>
         <li><Link to={'meals'}>Meals</Link></li>
         <li><Link to={'upcomingMeals'}>Upcoming Meals Icon</Link></li>
-        <li><Link to={'logIn'}>Join Us</Link></li>
-        <li><Link to={'signUp'}>sign up</Link></li>
-    </>
 
+        {
+            user ? <>
+                <div className="dropdown dropdown-end">
+                    <div tabIndex={0} role="button" className="btn btn-circle p-2 ring-1">
+                        <img src={user.photoURL} alt="user/img.." />
+                    </div>
+                    <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                        <p>{user.displayName}</p>
+                        <li><Link to={'/'}>Dashboard</Link></li>
+                        <li><Link onClick={handleSignOut}>LogOUt</Link></li>
+                    </ul>
+                </div>
+
+            </> : <>
+                <li><Link to={'logIn'}>Join Us</Link></li>
+                <li><Link to={'signUp'}>sign up</Link></li>
+            </>
+        }
+    </>
+    console.log("user:", user);
     return (
         <div className="drawer">
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
