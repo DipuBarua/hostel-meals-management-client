@@ -13,4 +13,5 @@
 - swiper
 - tanstack/react-query
 - react-tabs
+- AOS
 -react-parallax

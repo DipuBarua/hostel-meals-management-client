@@ -13,14 +13,23 @@ const MealsCategory = () => {
     const dinner = meals.filter(meal => meal.category === "dinner")
 
     return (
-        <div>
+        <div className=" mb-24 mx-10">
 
             <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
-                <TabList>
+                <TabList className="text-center bg-slate-400 mb-10 pt-2">
+                    <Tab>All Meals</Tab>
                     <Tab>Breakfast</Tab>
                     <Tab>Lunch</Tab>
                     <Tab>Dinner</Tab>
                 </TabList>
+
+                <TabPanel>
+                    <div className=" grid grid-cols-2 md:grid-cols-4 gap-10">
+                        {
+                            meals.map(item => <MealCart key={item._id} item={item}></MealCart>)
+                        }
+                    </div>
+                </TabPanel>
 
                 <TabPanel>
                     <div className=" grid grid-cols-2 md:grid-cols-4 gap-10">
