@@ -4,6 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
+import GoogleSignIn from "../Shared/SocialSignIn/GoogleSignIn";
 
 const SignUp = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm()
@@ -55,7 +56,7 @@ const SignUp = () => {
         <div>
             <Helmet>
                 <title>
-                HostelMeals | SignUp
+                    HostelMeals | SignUp
                 </title>
             </Helmet>
 
@@ -117,6 +118,9 @@ const SignUp = () => {
                         <div className="form-control mt-6">
                             <button className="btn btn-outline rounded-none hover:bg-blue-600">Sign Up</button>
                         </div>
+
+                        <GoogleSignIn></GoogleSignIn>
+
                         <div className="border border-black p-2">
                             <p>Already have an account? if Yes, please
                                 <Link to={"/logIn"}>

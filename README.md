@@ -10,3 +10,7 @@
 - axios
 - sweetalert2
 - react-helmet-async
+- swiper
+- tanstack/react-query
+- react-tabs
+-react-parallax

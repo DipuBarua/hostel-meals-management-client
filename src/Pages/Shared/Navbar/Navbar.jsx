@@ -15,7 +15,7 @@ const Navbar = () => {
 
         {
             user ? <>
-                <div className="dropdown dropdown-end">
+                <div className="dropdown dropdown-end z-20">
                     <div tabIndex={0} role="button" className="btn btn-circle p-2 ring-1">
                         <img src={user.photoURL} alt="user/img.." />
                     </div>
@@ -54,7 +54,7 @@ const Navbar = () => {
                 </div>
                 {/* Page content here */}
             </div>
-            <div className="drawer-side">
+            <div className="drawer-side absolute z-10">
                 <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
                 <ul className="menu p-4 w-80 min-h-full bg-base-200">
                     {/* Sidebar content here */}

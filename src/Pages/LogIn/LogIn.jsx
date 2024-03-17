@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { Helmet } from "react-helmet-async";
+import GoogleSignIn from "../Shared/SocialSignIn/GoogleSignIn";
 
 const LogIn = () => {
     const { logIn } = useAuth();
@@ -30,7 +31,7 @@ const LogIn = () => {
         <div>
             <Helmet>
                 <title>
-                HostelMeals | LogIn
+                    HostelMeals | LogIn
                 </title>
             </Helmet>
             <div className="hero min-h-screen bg-slate-400">
@@ -62,6 +63,7 @@ const LogIn = () => {
                         </div>
 
                         {/* Google signIn  */}
+                        <GoogleSignIn></GoogleSignIn>
 
                         <div className=" border border-black p-2">
                             <p>Have an account? if no, please <Link to={'/signUp'}><button className="btn-link font-semibold text-blue-600">Sign Up</button></Link></p>
