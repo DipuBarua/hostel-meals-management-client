@@ -47,7 +47,7 @@ const MealDetails = () => {
                         </div>
                     </div>
 
-                    <div className=" flex justify-between">
+                    <div className=" md:flex justify-between">
 
                         <button className=" mr-24 btn rounded-none hover:bg-green-600 border border-black">Meal request</button>
 
@@ -56,7 +56,7 @@ const MealDetails = () => {
                             <div className=" form-control w-full">
                                 <textarea type="text" {...register("review", { required: true })} placeholder="Share your review here..." className=" textarea rounded-none border-2 border-black mb-1" />
                             </div>
-                            <button className=" form-control border border-black p-1 hover:bg-gray-400">Review</button>
+                            <button className="border border-black p-1 hover:bg-gray-400">Review</button>
                         </form>
 
                     </div>

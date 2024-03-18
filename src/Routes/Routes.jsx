@@ -6,6 +6,7 @@ import LogIn from "../Pages/LogIn/LogIn";
 import SignUp from "../Pages/SignUp/SignUp";
 import PrivateRoute from "./PrivateRoute";
 import MealDetails from "../Pages/Home/MealsCategory/MealDetails/MealDetails";
+import UpcomingMeals from "../Pages/UpcomingMeals/UpcomingMeals";
 
 
 const router = createBrowserRouter([
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
             {
                 path: "mealDetails/:id",
                 element: <MealDetails></MealDetails>
+            },
+            {
+                path: "upcomingMeals",
+                element: <UpcomingMeals></UpcomingMeals>
             }
         ]
     },
