@@ -14,7 +14,7 @@ const MealCart = ({ item }) => {
                     <p className=" font-bold">${item.price}</p>
 
                     <div className="card-actions justify-end">
-                        <Link to={'/detai/${item._id}'}>
+                        <Link to={`/mealDetails/${item._id}`}>
                             <button className=" btn rounded-none hover:bg-slate-400">Details</button>
                         </Link>
 
