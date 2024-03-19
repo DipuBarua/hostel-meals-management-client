@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { FaChessKing } from "react-icons/fa";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const ManageUsers = () => {
-    const axiosPublic = useAxiosPublic()//secure
+    const axiosSecure = useAxiosSecure();
 
     const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await axiosPublic.get('/users');
+            const res = await axiosSecure.get('/users');
             return res.data;
         }
     })
@@ -29,7 +29,7 @@ const ManageUsers = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
 
-                const res = await axiosPublic.patch(`/user/${userEmail}`);
+                const res = await axiosSecure.patch(`/user/${userEmail}`);
                 if (res.data.modifiedCount > 0) {
                     refetch();
                     Swal.fire({

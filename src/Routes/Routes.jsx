@@ -11,6 +11,7 @@ import Dashboard from "../Layout/Dashboard";
 import AdminHome from "../Pages/Dashboard/AdminHome/AdminHome";
 import UserHome from "../Pages/Dashboard/UserHome/UserHome";
 import ManageUsers from "../Pages/Dashboard/ManageUsers/ManageUsers";
+import AdminRoute from "./AdminRoute";
 
 
 const router = createBrowserRouter([
@@ -51,11 +52,11 @@ const router = createBrowserRouter([
             // admin's routes 
             {
                 path: 'adminHome',
-                element: <AdminHome></AdminHome>
+                element: <AdminRoute><AdminHome></AdminHome></AdminRoute>
             },
             {
                 path: 'manageUsers',
-                element: <ManageUsers></ManageUsers>
+                element: <AdminRoute><ManageUsers></ManageUsers></AdminRoute>
             },
             // user's routes 
             {
