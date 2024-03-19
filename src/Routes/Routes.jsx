@@ -7,6 +7,10 @@ import SignUp from "../Pages/SignUp/SignUp";
 import PrivateRoute from "./PrivateRoute";
 import MealDetails from "../Pages/Home/MealsCategory/MealDetails/MealDetails";
 import UpcomingMeals from "../Pages/UpcomingMeals/UpcomingMeals";
+import Dashboard from "../Layout/Dashboard";
+import AdminHome from "../Pages/Dashboard/AdminHome/AdminHome";
+import UserHome from "../Pages/Dashboard/UserHome/UserHome";
+import ManageUsers from "../Pages/Dashboard/ManageUsers/ManageUsers";
 
 
 const router = createBrowserRouter([
@@ -40,6 +44,26 @@ const router = createBrowserRouter([
             }
         ]
     },
+    {
+        path: "dashboard",
+        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+        children: [
+            // admin's routes 
+            {
+                path: 'adminHome',
+                element: <AdminHome></AdminHome>
+            },
+            {
+                path: 'manageUsers',
+                element: <ManageUsers></ManageUsers>
+            },
+            // user's routes 
+            {
+                path: 'userHome',
+                element: <UserHome></UserHome>
+            }
+        ]
+    }
 ]);
 
 export default router;
