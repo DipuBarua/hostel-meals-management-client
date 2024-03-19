@@ -39,11 +39,11 @@ const MealDetails = () => {
                     </div>
 
                     <div>
-                        <p><strong>Ingredients: </strong>{ }</p>
-                        <p><strong>Meal Description: </strong>{ }</p>
+                        <p><strong>Ingredients: </strong>{meal.ingredients}</p>
+                        <p><strong>Meal Description: </strong>{meal.description}</p>
                         <div className=" flex border border-black p-1 ">
-                            <p><strong>Distributor: </strong>{ }</p>
-                            <p><strong>Post Time: </strong>{ }</p>
+                            <p><strong>Distributor: </strong>{meal.distributor_name}</p>
+                            <p><strong>Post Time: </strong>{meal.time}</p>
                         </div>
                     </div>
 

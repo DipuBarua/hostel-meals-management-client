@@ -13,24 +13,26 @@ const useAxiosSecure = () => {
     axiosSecure.interceptors.request.use(function (config) {
         // Do something before request is sent
         const token = localStorage.getItem("access-jwt");
-        config.headers.Authorization = `Bearer ${token}`
+        console.log('token get', token);
+        config.headers.authorization = `Bearer ${token}`
         return config;
-    },
-        function (error) {
-            return Promise.reject(error);
-        });
+    }, function (error) {
+        return Promise.reject(error);
+    });
 
     // respose for error 401,403 
     axiosSecure.interceptors.response.use(function (response) {
         return response;
     }, async function (error) {
         const status = error.response.status;
+        console.log("secure status:", status);
         if (status === 401 || status === 403) {
             await logOut();
             navigate("/logIn");
         }
         return Promise.reject(error);
     });
+
 
 
     return axiosSecure;

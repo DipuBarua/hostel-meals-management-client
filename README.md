@@ -14,4 +14,5 @@
 - tanstack/react-query
 - react-tabs
 - AOS
+- moment.js
 -react-parallax

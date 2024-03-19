@@ -13,7 +13,7 @@ const useMeals = () => {
     })
     console.log("meals:", meals);
 
-    return [meals];
+    return [meals, refetch];
 };
 
 export default useMeals;
