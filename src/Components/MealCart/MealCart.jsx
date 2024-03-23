@@ -6,9 +6,13 @@ const MealCart = ({ item }) => {
             <div className="card glass rounded-none">
                 <figure><img src={item.image} alt="meal" /></figure>
                 <div className="card-body pl-2 pr-0 py-0">
-                    <div className=" flex justify-between">
-                        <p className="card-title ">{item.title}</p>
-                        <p className=" text-center text-orange-600 bg-black">{item.rating}*</p>
+                    <div className=" flex justify-between relative">
+                        <div className="card-title ">{item.title}</div>
+                        <div className=" relative right-0 top-0 text-center text-orange-500 ">
+                            <span className=" px-5 bg-black">
+                                {item.rating}*
+                            </span>
+                        </div>
                     </div>
 
                     <p className=" font-bold">${item.price}</p>

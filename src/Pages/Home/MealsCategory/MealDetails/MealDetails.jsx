@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { FaHeart } from "react-icons/fa";
 
 const MealDetails = () => {
     const axiosPublic = useAxiosPublic();
@@ -25,16 +26,26 @@ const MealDetails = () => {
     return (
         <div>
             <div className="card bg-base-100 shadow-xl">
-                <figure><img src={meal.image} alt="meal.img" /></figure>
+                <figure className=" rounded-none p-10"><img className="" src={meal.image} alt="meal.img" /></figure>
                 <div className="card-body">
                     <div className=" flex justify-between">
-                        <h2 className="card-title text-3xl">
+                        <div className="card-title text-3xl">
                             {meal.title}
-                            <button onClick={''} className="badge badge-secondary">Like</button>
-                        </h2>
+                            <div className="badge badge-outline bg-orange-500 p-3">{meal.rating}*</div>
+                            <div className="badge badge-outline p-3">${meal.price}</div>
+                            <div className="badge badge-outline badge-secondary p-3">Likes: {meal.like}</div>
+                        </div>
                         <div className="card-actions justify-end">
-                            <div className="badge badge-outline bg-orange-500">{meal.rating}*</div>
-                            <div className="badge badge-outline">${meal.price}</div>
+                            {
+                                meal.like === 0 ?
+                                    <button onClick={""} className=" text-3xl">
+                                        <FaHeart className=" "></FaHeart>
+                                    </button>
+                                    :
+                                    <button className=" text-3xl">
+                                        <FaHeart className=" text-red-600"></FaHeart>
+                                    </button>
+                            }
                         </div>
                     </div>
 

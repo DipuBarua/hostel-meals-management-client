@@ -1,16 +1,11 @@
 import { FaEye, FaPenSquare, FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const AllMealsTable = ({ index, item, refetch }) => {
     const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
-
-
-    const handleUpdate = (id) => {
-        console.log(id);
-    }
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -77,9 +72,9 @@ const AllMealsTable = ({ index, item, refetch }) => {
 
             {/* update */}
             <td>
-                <button onClick={() => handleUpdate(item._id)} className="btn btn-ghost">
+                <Link to={`/dashboard/updateMeal/${item._id}`} className="btn btn-ghost">
                     <FaPenSquare className=" text-xl text-green-600" />
-                </button>
+                </Link>
             </td>
 
             {/* DELETE */}
