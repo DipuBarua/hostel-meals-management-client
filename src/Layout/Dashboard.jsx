@@ -74,9 +74,9 @@ const Dashboard = () => {
                                 </li>
 
                                 <li>
-                                    <NavLink to={"requestedMeal"}>
+                                    <NavLink to={"requestedMeals"}>
                                         <FaBookOpen></FaBookOpen>
-                                        Requested Meal
+                                        Requested Meals
                                     </NavLink>
                                 </li>
 

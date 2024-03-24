@@ -15,6 +15,7 @@ import AdminRoute from "./AdminRoute";
 import AddMeal from "../Pages/Dashboard/AddMeal/AddMeal";
 import AllMeals from "../Pages/Dashboard/AllMeals/AllMeals";
 import UpdateMeal from "../Components/UpdateMeal/UpdateMeal";
+import RequestedMeals from "../Pages/Dashboard/RequestedMeals/RequestedMeals";
 
 
 const router = createBrowserRouter([
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
             {
                 path: 'userHome',
                 element: <UserHome></UserHome>
+            },
+            {
+                path: "requestedMeals",
+                element: <RequestedMeals></RequestedMeals>
             }
         ]
     }
