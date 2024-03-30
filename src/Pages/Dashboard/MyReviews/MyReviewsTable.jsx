@@ -4,10 +4,12 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Link } from "react-router-dom";
 import Modal from 'react-modal';
 import React from "react";
+import { MdOutlineCancelPresentation } from "react-icons/md";
 
 const MyReviewsTable = ({ item, index, refetch }) => {
     const axiosSecure = useAxiosSecure();
 
+    // react Modal 
     const customStyles = {
         content: {
             top: '50%',
@@ -16,32 +18,57 @@ const MyReviewsTable = ({ item, index, refetch }) => {
             bottom: 'auto',
             marginRight: '-50%',
             transform: 'translate(-50%, -50%)',
+            width: "50%",
+            height: "50%",
+            background: '#d6d8fd',
         },
     };
-
     const [modalIsOpen, setIsOpen] = React.useState(false);
-
-    // const handleEdit = () => {
-    // const editItem = {
-    //     review:''
-    // }
-
     let subtitle;
 
-    function openModal() {
+
+    // function openModal() {setIsOpen(true)}
+    const openModal = () => {
         setIsOpen(true);
     }
 
     function afterOpenModal() {
-        // references are now sync'd and can be accessed.
-        subtitle.style.color = '#f00';
+        subtitle.style.color = '#3b34fd';
     }
 
     function closeModal() {
         setIsOpen(false);
+    }
+
+
+    const handleEdit = async (e) => {
+        e.preventDefault();
+        const form = e.target;
+
+        const updatedReview = {
+            editItem: form.review.value,
+        }
+
+        await axiosSecure.patch(`/review/${item._id}`, updatedReview)
+            .then(res => {
+                console.log(res.data);
+                if (res.data.modifiedCount > 0) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "This review has been edited",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    setIsOpen(false);
+                    refetch();
+                }
+            })
+            .catch(err => console.log(err))
 
     }
-    // }
+
+
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -94,18 +121,13 @@ const MyReviewsTable = ({ item, index, refetch }) => {
                 <div className="font-bold">{item?.review}</div>
             </td>
 
-            {/* Edit */}
-            {/* <td>
-                <button onClick={() => handleEdit(item._id)} className="btn btn-ghost">
-                    <FaRegEdit className=" text-xl hover:text-green-600" />
-                </button>
-            </td> */}
 
-
-            {/* edit by react modal  */}
+            {/* Edit by react modal  */}
             <td>
                 <div>
-                    <button className=" btn" onClick={openModal}>Edit</button>
+                    <button className="btn btn-ghost" onClick={openModal}>
+                        <FaRegEdit className=" text-xl hover:text-green-600" />
+                    </button>
 
                     <Modal
                         isOpen={modalIsOpen}
@@ -113,15 +135,30 @@ const MyReviewsTable = ({ item, index, refetch }) => {
                         onRequestClose={closeModal}
                         style={customStyles}
                         contentLabel="Example Modal"
+                        className=""
                     >
+                        <div className=" flex justify-between text-xl font-semibold">
+                            <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Edit Review</h2>
 
-                        <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
+                            <button className=" text-xl font-semibold" onClick={closeModal}>
+                                <MdOutlineCancelPresentation />
+                            </button>
+                        </div>
 
-                        <button className=" btn" onClick={closeModal}>close</button>
+                        <form onSubmit={handleEdit}>
+                            <div className="form-control my-4">
+                                <textarea
+                                    type="text"
+                                    name="review"
+                                    defaultValue={item?.review}
+                                    placeholder="Edit your review"
+                                    className="input rounded-none"
+                                    required />
+                            </div>
 
-                        <form>
-                            <input />
-                            <button className=" btn">Submit</button>
+                            <div className=" form-control my-4">
+                                <button className="btn btn-ghost btn-outline rounded-none"> Edit </button>
+                            </div>
                         </form>
 
                     </Modal>

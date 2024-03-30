@@ -3,10 +3,12 @@ import useMeals from "../../hooks/useMeals";
 import MealCart from "../../Components/MealCart/MealCart";
 import { FaSearch } from "react-icons/fa";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 const Meals = () => {
     const [meals] = useMeals();
     const { register, handleSubmit, reset } = useForm();
+    const [searchedItem, setSearchedItem] = useState([])
 
     const filterSubmit = (data) => {
         console.log(data);
@@ -14,8 +16,11 @@ const Meals = () => {
 
     const handleSearch = (e) => {
         e.preventDefault();
-        const title = e.target.search.value;
-        console.log(title);
+        const searchTitle = e.target.search.value;
+        console.log(searchTitle);
+
+        const searched = meals.filter(meal => meal?.title.toLowerCase().includes(searchTitle.toLowerCase()));
+        setSearchedItem(searched);
     }
 
     return (
@@ -31,7 +36,7 @@ const Meals = () => {
                 <form onSubmit={handleSearch} className=" flex-1">
                     <div className=" form-control w-full bg-blue-800">
                         <label className=" input input-bordered flex items-center gap-2 px-0 rounded-none">
-                            <input type="text" name="search" className="grow" placeholder=" Search with Title" />
+                            <input type="text" name="search" className="grow pl-2" placeholder=" Search with Title" />
 
                             <button type="submit" className=" bg-gray-300 h-full px-5">
                                 <FaSearch className=" mt-2"></FaSearch>
@@ -72,10 +77,16 @@ const Meals = () => {
 
             <div className=" grid grid-cols-2 md:grid-cols-3 gap-12 mx-12 my-24">
                 {
-                    meals.map(item => <MealCart
-                        key={item._id}
-                        item={item}
-                    ></MealCart>)
+                    searchedItem.length > 0 ?
+                        searchedItem.map(item => <MealCart
+                            key={item._id}
+                            item={item}
+                        ></MealCart>)
+                        :
+                        meals.map(item => <MealCart
+                            key={item._id}
+                            item={item}
+                        ></MealCart>)
                 }
             </div>
 

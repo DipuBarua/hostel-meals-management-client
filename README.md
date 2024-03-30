@@ -15,4 +15,5 @@
 - react-tabs
 - AOS
 - moment.js
+- react-modal
 -react-parallax
