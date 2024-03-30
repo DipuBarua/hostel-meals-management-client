@@ -16,6 +16,7 @@ import AddMeal from "../Pages/Dashboard/AddMeal/AddMeal";
 import AllMeals from "../Pages/Dashboard/AllMeals/AllMeals";
 import UpdateMeal from "../Components/UpdateMeal/UpdateMeal";
 import RequestedMeals from "../Pages/Dashboard/RequestedMeals/RequestedMeals";
+import MyReviews from "../Pages/Dashboard/MyReviews/MyReviews";
 
 
 const router = createBrowserRouter([
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
             {
                 path: "requestedMeals",
                 element: <RequestedMeals></RequestedMeals>
+            },
+            {
+                path: "myReviews",
+                element: <MyReviews></MyReviews>
             }
         ]
     }
