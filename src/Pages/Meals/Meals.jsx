@@ -10,10 +10,17 @@ const Meals = () => {
     const { register, handleSubmit, reset } = useForm();
     const [searchedItem, setSearchedItem] = useState([])
 
+    // filter 
     const filterSubmit = (data) => {
         console.log(data);
+        const filteredCategory = data.categoy;
+        const filteredPrice = data.priceRange;//need to update
+
+        const filtered = meals.filter(meal => meal?.category.toLowerCase().includes(filteredCategory.toLowerCase()));
+        setSearchedItem(filtered);
     }
 
+    // search 
     const handleSearch = (e) => {
         e.preventDefault();
         const searchTitle = e.target.search.value;
