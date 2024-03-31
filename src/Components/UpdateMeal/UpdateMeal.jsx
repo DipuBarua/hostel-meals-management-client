@@ -64,7 +64,7 @@ const UpdateMeal = () => {
 
             <div className="w-4/5 mx-auto shadow-2xl shadow-blue-200 bg-white mb-10">
 
-                <h2 className=" pt-24 text-4xl font-bold text-center">ADD MEAL </h2>
+                <h2 className=" pt-24 text-4xl font-bold text-center">UPDATE MEAL </h2>
 
                 <form onSubmit={handleSubmit(handleUpdateMeal)} className=" card-body">
 

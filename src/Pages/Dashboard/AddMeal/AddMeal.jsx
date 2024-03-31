@@ -8,7 +8,8 @@ const AddMeal = () => {
     const { register, handleSubmit, reset } = useForm();
     const axiosSecure = useAxiosSecure();
 
-    const handleAddMeal = (data) => {
+    // add meal 
+    const handleAddMeal = async (data) => {
         console.log(data);
         const mealInfo = {
             title: data.title,
@@ -26,7 +27,7 @@ const AddMeal = () => {
         }
         console.log(mealInfo);
 
-        axiosSecure.post("/meal", mealInfo)
+        await axiosSecure.post("/meal", mealInfo)
             .then(res => {
                 console.log(res.data);
                 if (res.data.insertedId) {
@@ -41,17 +42,48 @@ const AddMeal = () => {
                 }
             })
             .catch(err => console.log(err))
-
     }
 
-    // const handleUpcoming = (data) => {
-    //     console.log("upcoming:", data);
-    // }
+
+    // add upcoming meal 
+    const handleUpcoming = async (data) => {
+        console.log("upcoming:", data);
+
+        const upcomingInfo = {
+            title: data.title,
+            image: data.image,
+            rating: parseFloat(data.rating),
+            price: parseFloat(data.price),
+            category: data.category,
+            ingredients: data.ingredients,
+            description: data.description,
+            like: parseInt(data.like),
+            review: parseInt(data.review),
+            distributor_name: data.distributor_name,
+            distributor_email: data.distributor_email,
+            time: data.time,
+        }
+
+        await axiosSecure.post("/upcoming-meals", upcomingInfo)
+            .then(res => {
+                if (res.data.insertedId) {
+                    reset();
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Meal has been added as Upcoming Item",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
+            .catch(err => console.log(err))
+    }
 
     let time = moment().format('MMMM Do YYYY, h:mm:ss a');
 
     return (
-        <div className="">
+        <div>
             <Helmet>
                 <title>
                     HostelMeal | AddMeal
@@ -64,8 +96,7 @@ const AddMeal = () => {
 
                 <h2 className=" pt-24 text-4xl font-bold text-center">ADD MEAL </h2>
 
-                <form onSubmit={handleSubmit(handleAddMeal)} className=" card-body">
-
+                <form className=" card-body">
                     <div className=" flex justify-between items-center">
                         {/* Time  */}
                         <div className="form-control">
@@ -213,14 +244,13 @@ const AddMeal = () => {
                     </div>
 
                     <div className="form-control mt-6 flex flex-row justify-around gap-12">
-                        {/* <button onClick={} className="btn btn-info flex-1">Add to Upcoming</button> */}
-                        <button className="btn btn-secondary flex-1">Add Meal</button>
+                        <button onClick={handleSubmit(handleUpcoming)} className="btn btn-outline flex-1">Add to Upcoming</button>
+
+                        <button onClick={handleSubmit(handleAddMeal)} className="btn btn-secondary flex-1">Add Meal</button>
                     </div>
-
                 </form>
+
             </div>
-
-
         </div>
     );
 };

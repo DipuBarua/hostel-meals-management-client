@@ -1,9 +1,25 @@
-import { FaDelicious, FaDemocrat, FaServer, FaVoteYea } from "react-icons/fa";
+import { FaVoteYea } from "react-icons/fa";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const ServeTable = ({ item, index, refetch }) => {
+    const axiosSecure = useAxiosSecure();
 
-    const handleServe = () => {
-
+    const handleServe = async (id) => {
+        await axiosSecure.patch(`/request/${id}`)
+            .then(res => {
+                console.log(res.data);
+                refetch();
+                if (res.data.modifiedCount == 0) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "warning",
+                        title: "Meal has already served",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
     }
 
     return (
@@ -31,7 +47,12 @@ const ServeTable = ({ item, index, refetch }) => {
 
             {/* status */}
             <td>
-                <div className="font-bold">{item?.status}</div>
+                {
+                    item?.status === "delivered" ?
+                        <div className="font-bold bg-green-500 rounded-sm text-white text-center w-2/3">{item?.status}</div>
+                        :
+                        <div className="font-bold text-center bg-gray-400 rounded-sm w-2/3">{item?.status}</div>
+                }
             </td>
 
             {/* serve */}
