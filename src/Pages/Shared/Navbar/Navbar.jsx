@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import { FaPizzaSlice } from "react-icons/fa";
+import useUpcomingMeals from "../../../hooks/useUpcomingMeals";
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
+    const [upcomingMeals] = useUpcomingMeals();
 
     const handleSignOut = () => {
         logOut();
@@ -12,11 +14,12 @@ const Navbar = () => {
     const navLinks = <>
         <li><Link to={'/'}>Home</Link></li>
         <li><Link to={'meals'}>Meals</Link></li>
-        <li><Link to={'upcomingMeals'} className=" hover:bg-purple-400">
-            <span className="badge badge-sm">{"99"}+</span>
-            upcoming
+        <li><Link to={'upcomingMeals'} className=" hover:bg-purple-200">
             <FaPizzaSlice></FaPizzaSlice>
+            Upcoming
+            <span className="badge badge-sm">{upcomingMeals.length}+</span>
         </Link></li>
+
 
         {
             user ? <>

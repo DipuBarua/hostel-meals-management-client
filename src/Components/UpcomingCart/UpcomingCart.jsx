@@ -1,10 +1,15 @@
-import { FaLeaf } from "react-icons/fa";
+import { FaLeaf, FaRegThumbsUp } from "react-icons/fa";
 
 const UpcomingCart = ({ item }) => {
     return (
         <div>
             <div className="card glass rounded-none">
-                <figure><img src={item.image} alt="meal" /></figure>
+                <figure><img src={item.image} alt="meal" />
+                </figure>
+
+                <button onClick={''} className=" text-4xl text-black relative -top-12 left-1">
+                    <FaRegThumbsUp className=" absolute hover:text-blue-600"></FaRegThumbsUp>
+                </button>
 
 
                 <div className="relative left-1/2 -top-44 bg-gray-700 bg-opacity-40 py-4 w-1/2">

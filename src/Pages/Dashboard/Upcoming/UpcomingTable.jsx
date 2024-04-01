@@ -5,6 +5,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 const UpcomingTable = ({ item, index, refetch }) => {
     const axiosSecure = useAxiosSecure();
 
+    // Delete 
     const handleDelete = (id) => {
         Swal.fire({
             title: "Are you sure?",
@@ -31,7 +32,48 @@ const UpcomingTable = ({ item, index, refetch }) => {
         })
     };
 
-    const handlePublish = () => { }
+    // Production 
+    const handlePublish = () => {
+
+        const productionInfo = {
+            title: item.title,
+            image: item.image,
+            rating: parseFloat(item.rating),
+            price: parseFloat(item.price),
+            category: item.category,
+            ingredients: item.ingredients,
+            description: item.description,
+            like: parseInt(item.like),
+            review: parseInt(item.review),
+            distributor_name: item.distributor_name,
+            distributor_email: item.distributor_email,
+            time: item.time,
+        }
+
+        Swal.fire({
+            title: "Are you sure to publish?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Publish it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await axiosSecure.post(`/meal`, productionInfo)//can't use {item} as an obj to avoide _id problem in db.
+                    .then(res => {
+                        if (res.data.insertedId) {
+                            refetch();
+                            Swal.fire({
+                                title: "Published",
+                                text: `${item.title} has been published`,
+                                icon: "success"
+                            });
+                        }
+                    })
+                    .catch(err => console.log(err));
+            }
+        })
+    }
 
     return (
         <tr >
@@ -74,7 +116,7 @@ const UpcomingTable = ({ item, index, refetch }) => {
 
             {/* Publish */}
             <td>
-                <button onClick={() => handlePublish(item._id)} className="btn btn-ghost">
+                <button onClick={() => handlePublish()} className="btn btn-ghost">
                     <FaLeaf className=" text-xl hover:text-green-600" />
                 </button>
             </td>

@@ -82,20 +82,22 @@ const Meals = () => {
 
             </div>
 
-            <div className=" grid grid-cols-2 md:grid-cols-3 gap-12 mx-12 my-24">
-                {
-                    searchedItem.length > 0 ?
-                        searchedItem.map(item => <MealCart
-                            key={item._id}
-                            item={item}
-                        ></MealCart>)
-                        :
-                        meals.map(item => <MealCart
-                            key={item._id}
-                            item={item}
-                        ></MealCart>)
-                }
-            </div>
+
+                <div className=" grid grid-cols-2 md:grid-cols-3 gap-12 mx-12 my-24">
+                    {
+                        searchedItem.length > 0 ?
+                            searchedItem.map(item => <MealCart
+                                key={item._id}
+                                item={item}
+                            ></MealCart>)
+                            :
+                            meals.map(item => <MealCart
+                                key={item._id}
+                                item={item}
+                            ></MealCart>)
+                    }
+                </div>
+
 
         </div>
     );

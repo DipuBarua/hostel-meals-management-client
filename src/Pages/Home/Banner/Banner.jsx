@@ -12,7 +12,7 @@ import { FaSearch } from "react-icons/fa";
 const Banner = () => {
     return (
         <div>
-            <div className=" absolute z-10 left-1/3 top-1/2 w-1/2 mx-auto">
+            <div className="absolute z-10 md:left-1/3 md:top-1/2 md:w-1/2 mx-auto">
                 <h2 className=" text-5xl font-bold text-white shadow-black">Hostel Meals Management</h2>
                 <p className=" text-white text-sm">hostel meals play a crucial role in fostering a sense of community, providing nourishment, and enhancing the overall hostel experience for residents. Whether it is a simple breakfast shared with newfound friends or a festive dinner celebrating cultural diversity, hostel meals bring people together in a shared space of warmth and camaraderie.</p>
 

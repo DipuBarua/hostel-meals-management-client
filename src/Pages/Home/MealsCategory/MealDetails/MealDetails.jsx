@@ -96,7 +96,7 @@ const MealDetails = () => {
                             {meal.title}
                             <div className="badge badge-outline bg-orange-500 p-3">{meal.rating}*</div>
                             <div className="badge badge-outline p-3">${meal.price}</div>
-                            <div className="badge badge-outline badge-secondary p-3">Likes: {meal.like}</div>
+                            <div className="badge badge-outline badge-secondary p-3">Likes:{meal.like}</div>
                         </div>
                         <div className="card-actions justify-end">
                             {
