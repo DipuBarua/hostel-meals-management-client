@@ -1,9 +1,21 @@
-import { Link } from "react-router-dom";
-import img from "../../../assets/food.jpg"
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
+import MemberShipCart from './MemberShipCart';
+
+
 
 const MemberShip = () => {
+    const axiosPublic = useAxiosPublic();
+
+    const { data: packages = [] } = useQuery({
+        queryKey: ["packages"],
+        queryFn: async () => {
+            const res = await axiosPublic.get("/packages")
+            return res.data;
+        }
+    })
 
     AOS.init();
 
@@ -16,27 +28,17 @@ const MemberShip = () => {
             <div className=" grid grid-cols-1 md:grid-cols-3 gap-10 mx-10 ">
                 {/* silver  */}
 
+                {
+                    packages.map(item => <MemberShipCart
+                        key={item._id}
+                        item={item}>
+                    </MemberShipCart>)
+                }
 
-                <div data-aos="fade-up"
-                    data-aos-duration="3000">
-                    <Link>
-                        <div className="card bg-base-100 shadow-xl image-full rounded-none ">
-                            <figure><img src={img} alt="" /></figure>
-                            <div className="card-body">
-                                <h2 className="card-title text-3xl">Silver</h2>
-                                <p>Buy this Silver cart to get better service</p>
-                                <p>Your Subscription valid for <span className=" text-xl font-bold">1 Month</span></p>
-                                <div className=" border-2 rounded border-white text-center p-2">
-                                    <p>$20/Month</p>
-                                </div>
-                            </div>
-                        </div>
-                    </Link>
-                </div>
+            </div>
 
-
-                {/* gold  */}
-                <div data-aos="fade-up" data-aos-duration="6000">
+            {/* gold  */}
+            {/* <div data-aos="fade-up" data-aos-duration="6000">
                     <Link>
                         <div className="card bg-base-100 shadow-xl image-full rounded-none ">
                             <figure><img src={img} alt="" /></figure>
@@ -50,11 +52,11 @@ const MemberShip = () => {
                             </div>
                         </div>
                     </Link>
-                </div>
+                </div> */}
 
 
-                {/* platinum  */}
-                <div data-aos="fade-up" data-aos-duration="3000">
+            {/* platinum  */}
+            {/* <div data-aos="fade-up" data-aos-duration="3000">
                     <Link>
                         <div className="card bg-base-100 shadow-xl image-full rounded-none ">
                             <figure><img src={img} alt="" /></figure>
@@ -68,9 +70,9 @@ const MemberShip = () => {
                             </div>
                         </div>
                     </Link>
-                </div>
+                </div> */}
 
-            </div>
+
         </div>
     );
 };

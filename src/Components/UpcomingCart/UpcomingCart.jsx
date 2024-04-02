@@ -7,8 +7,8 @@ const UpcomingCart = ({ item }) => {
                 <figure><img src={item.image} alt="meal" />
                 </figure>
 
-                <button onClick={''} className=" text-4xl text-black relative -top-12 left-1">
-                    <FaRegThumbsUp className=" absolute hover:text-blue-600"></FaRegThumbsUp>
+                <button onClick={''} className="text-4xl text-black relative -top-12 left-1">
+                    <FaRegThumbsUp className="absolute hover:text-green-500 bg-gray-600 bg-opacity-20 rounded-full hover:bg-white p-1"></FaRegThumbsUp>
                 </button>
 
 

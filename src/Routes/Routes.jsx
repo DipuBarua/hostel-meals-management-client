@@ -20,6 +20,7 @@ import MyReviews from "../Pages/Dashboard/MyReviews/MyReviews";
 import AllReviews from "../Pages/Dashboard/AllReviews/AllReviews";
 import ServeMeals from "../Pages/Dashboard/ServeMeals/ServeMeals";
 import Upcoming from "../Pages/Dashboard/Upcoming/Upcoming";
+import Payment from "../Components/Checkout/Payment";
 
 
 const router = createBrowserRouter([
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
             {
                 path: "upcomingMeals",
                 element: <UpcomingMeals></UpcomingMeals>
+            },
+            {
+                path: "payment",
+                element: <PrivateRoute><Payment></Payment></PrivateRoute>
             }
         ]
     },
