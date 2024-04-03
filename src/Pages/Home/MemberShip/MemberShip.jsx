@@ -37,42 +37,6 @@ const MemberShip = () => {
 
             </div>
 
-            {/* gold  */}
-            {/* <div data-aos="fade-up" data-aos-duration="6000">
-                    <Link>
-                        <div className="card bg-base-100 shadow-xl image-full rounded-none ">
-                            <figure><img src={img} alt="" /></figure>
-                            <div className="card-body">
-                                <h2 className="card-title text-3xl">Gold</h2>
-                                <p>Buy this gold cart to get better service</p>
-                                <p>Your Subscription valid for <span className=" text-xl font-bold">1 Month</span></p>
-                                <div className=" border-2 rounded border-white text-center p-2">
-                                    <p>$30/Month</p>
-                                </div>
-                            </div>
-                        </div>
-                    </Link>
-                </div> */}
-
-
-            {/* platinum  */}
-            {/* <div data-aos="fade-up" data-aos-duration="3000">
-                    <Link>
-                        <div className="card bg-base-100 shadow-xl image-full rounded-none ">
-                            <figure><img src={img} alt="" /></figure>
-                            <div className="card-body">
-                                <h2 className="card-title text-3xl">Platinum</h2>
-                                <p>Buy this platinum cart to get better service</p>
-                                <p>Your Subscription valid for <span className=" text-xl font-bold">1 Month</span></p>
-                                <div className=" border-2 rounded border-white text-center p-2">
-                                    <p>$40/Month</p>
-                                </div>
-                            </div>
-                        </div>
-                    </Link>
-                </div> */}
-
-
         </div>
     );
 };

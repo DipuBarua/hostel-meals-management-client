@@ -53,7 +53,7 @@ const router = createBrowserRouter([
                 element: <UpcomingMeals></UpcomingMeals>
             },
             {
-                path: "payment",
+                path: "payment/:package_name",
                 element: <PrivateRoute><Payment></Payment></PrivateRoute>
             }
         ]

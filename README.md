@@ -16,4 +16,7 @@
 - AOS
 - moment.js
 - react-modal
+- stripe
+- stripe-js
+- react-stripe-js
 -react-parallax
