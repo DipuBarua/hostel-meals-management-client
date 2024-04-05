@@ -2,10 +2,15 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useStripe, CardElement, useElements } from "@stripe/react-stripe-js";
 import useAuth from "../../hooks/useAuth";
+import moment from "moment";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
-const CheckoutForm = ({ price }) => {
+const CheckoutForm = ({ item }) => {
+    console.log("item:", item);
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
+    const navigate = useNavigate();
     const [clientSecret, setClientSecret] = useState("");
     const [errorMsg, setErrorMsg] = useState('');
     const [transactionId, setTransactionId] = useState('');
@@ -46,7 +51,7 @@ const CheckoutForm = ({ price }) => {
                 billing_details: {
                     name: user?.displayName || "anonymous",
                     email: user?.email || "anonymous",
-                    // phone: user?.phoneNumber || "anonymous",
+                    phone: user?.phoneNumber || "anonymous",
                 }
             }
         })
@@ -62,6 +67,30 @@ const CheckoutForm = ({ price }) => {
             if (paymentIntent.status === "succeeded") {
                 console.log('trnx Id:', paymentIntent.id);
                 setTransactionId(paymentIntent.id);
+
+                // save payment info in database 
+                const paymentInfo = {
+                    email: user.email,
+                    price: item.price,
+                    status: item.package_name,
+                    transaction_id: transactionId,
+                    time: moment().format('DD-MM-YYYY, h:mm:ss a'),
+                }
+
+                await axiosSecure.post("/payment", paymentInfo)
+                    .then(res => {
+                        if (res.data.insertedId) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: `Successfully you got ${item.package_name} Membership`,
+                                showConfirmButton: false,
+                                timer: 2500
+                            });
+                            navigate("/");
+                        }
+                    })
+
             }
         }
 
@@ -69,12 +98,12 @@ const CheckoutForm = ({ price }) => {
 
 
     useEffect(() => {
-        axiosSecure.post("/create-payment-intent", { price: price })
+        axiosSecure.post("/create-payment-intent", { price: item.price })
             .then(res => {
                 console.log(res.data.clientSecret);
                 setClientSecret(res.data.clientSecret);
             })
-    }, [axiosSecure, price])
+    }, [axiosSecure, item])
 
     return (
         <div className=" min-h-screen text-center bg-gray-300 text-white">
@@ -99,17 +128,19 @@ const CheckoutForm = ({ price }) => {
 
 
                 <button
-                    // disabled={!stripe || !elements || !clientSecret}
+                    disabled={!stripe || !elements || !clientSecret}
                     type="submit"
                     className=" btn btn-outline my-7 w-1/2"
                 >Pay
                 </button>
 
                 {/* Show any error or success messages */}
-                <h2 className=" text-red-600 p-4">{errorMsg}</h2>
-                {transactionId &&
-                    <p className=" text-green-600 p-4">Your Transaction Id: {transactionId}</p>
-                }
+                <div className=" py-2 bg-white">
+                    <h2 className=" text-red-600">{errorMsg}</h2>
+                    {transactionId &&
+                        <p className=" text-green-500">Your Transaction Id:  {transactionId}</p>
+                    }
+                </div>
 
             </form>
         </div>

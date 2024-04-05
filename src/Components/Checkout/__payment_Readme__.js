@@ -1,7 +1,7 @@
 /**
  * Build Stripe Payment Gateway
  * 
- * 1>> install stripe, stripe-js, react-stripe-js in client side.
+ * 1>> install stripe, stripe-js, react-stripe-js in client side. install stripe in server side.
  * 2>> need to open account in stripe and Get publishable key(use in client) and secret key(use in server) form stripe api.
  * 3>> use PK to get stripe promise
  * 4>> post data(price) from checkoutForm

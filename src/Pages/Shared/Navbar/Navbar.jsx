@@ -2,10 +2,12 @@ import { Link } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import { FaPizzaSlice } from "react-icons/fa";
 import useUpcomingMeals from "../../../hooks/useUpcomingMeals";
+import useAdmin from "../../../hooks/useAdmin";
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
     const [upcomingMeals] = useUpcomingMeals();
+    const [isAdmin] = useAdmin();
 
     const handleSignOut = () => {
         logOut();
@@ -29,7 +31,12 @@ const Navbar = () => {
                     </div>
                     <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                         <p className=" text-center font-semibold underline pb-2">{user.displayName}</p>
-                        <li><Link to={'dashboard'}>Dashboard</Link></li>
+                        {
+                            isAdmin === true ?
+                                <li><Link to={'dashboard/adminHome'}>Dashboard</Link></li>
+                                :
+                                <li><Link to={'dashboard/userHome'}>Dashboard</Link></li>
+                        }
                         <li><Link onClick={handleSignOut}>LogOUt</Link></li>
                     </ul>
                 </div>
