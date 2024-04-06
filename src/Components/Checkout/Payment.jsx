@@ -22,7 +22,7 @@ const Payment = () => {
     console.log(item.price);
 
     return (
-        <div>
+        <div className=" bg-orange-700">
             <Helmet>
                 <title>HostelMeals | Payment</title>
             </Helmet>
@@ -31,8 +31,14 @@ const Payment = () => {
                 <h2>Pay to Subscribe <span className=" text-amber-600 uppercase">{package_name}</span> Plan</h2>
             </div>
 
+            <div className=" p-2 w-1/2 mx-auto text-center text-xl font-semibold text-black bg-gray-300">
+                <h2>Total Amount: ${item?.price}</h2>
+            </div>
             <Elements stripe={stripPromise}>
-                <CheckoutForm item={item}></CheckoutForm>
+                <CheckoutForm
+                    // price={item?.price}
+                    item={item}
+                ></CheckoutForm>
             </Elements>
 
         </div>

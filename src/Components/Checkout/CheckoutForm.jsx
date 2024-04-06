@@ -4,16 +4,14 @@ import { useStripe, CardElement, useElements } from "@stripe/react-stripe-js";
 import useAuth from "../../hooks/useAuth";
 import moment from "moment";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 
 const CheckoutForm = ({ item }) => {
-    console.log("item:", item);
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
-    const navigate = useNavigate();
-    const [clientSecret, setClientSecret] = useState("");
+    const [clientSecret, setClientSecret] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [transactionId, setTransactionId] = useState('');
+    const [processing, setProcessing] = useState(false);
 
     const stripe = useStripe();
     const elements = useElements();
@@ -44,6 +42,8 @@ const CheckoutForm = ({ item }) => {
             setErrorMsg('');
         }
 
+        setProcessing(true);
+
         // confirm payment 
         const { paymentIntent, error: payError } = await stripe.confirmCardPayment(clientSecret, {
             payment_method: {
@@ -64,6 +64,7 @@ const CheckoutForm = ({ item }) => {
             console.log("payment intent:", paymentIntent);
             console.log("payment status:", paymentIntent.status);
 
+
             if (paymentIntent.status === "succeeded") {
                 console.log('trnx Id:', paymentIntent.id);
                 setTransactionId(paymentIntent.id);
@@ -73,24 +74,25 @@ const CheckoutForm = ({ item }) => {
                     email: user.email,
                     price: item.price,
                     status: item.package_name,
-                    transaction_id: transactionId,
+                    transaction_id: paymentIntent.id,
                     time: moment().format('DD-MM-YYYY, h:mm:ss a'),
                 }
 
                 await axiosSecure.post("/payment", paymentInfo)
                     .then(res => {
-                        if (res.data.insertedId) {
+                        if (res?.data?.insertedId) {
                             Swal.fire({
                                 position: "center",
                                 icon: "success",
-                                title: `Successfully you got ${item.package_name} Membership`,
+                                title: `Successfully you got ${item.package_name}  Membership`,
                                 showConfirmButton: false,
                                 timer: 2500
                             });
-                            navigate("/");
+
                         }
                     })
 
+                setProcessing(false);
             }
         }
 
@@ -100,10 +102,11 @@ const CheckoutForm = ({ item }) => {
     useEffect(() => {
         axiosSecure.post("/create-payment-intent", { price: item.price })
             .then(res => {
-                console.log(res.data.clientSecret);
+                console.log("secret109:", res.data);
                 setClientSecret(res.data.clientSecret);
             })
-    }, [axiosSecure, item])
+    }, [axiosSecure, item.price])
+    console.log("prices", item.price);
 
     return (
         <div className=" min-h-screen text-center bg-gray-300 text-white">
@@ -128,19 +131,29 @@ const CheckoutForm = ({ item }) => {
 
 
                 <button
-                    disabled={!stripe || !elements || !clientSecret}
+                    disabled={!stripe || !clientSecret || processing}
                     type="submit"
-                    className=" btn btn-outline my-7 w-1/2"
-                >Pay
+                    className=" btn btn-outline my-7 w-1/2">
+                    Pay
                 </button>
 
                 {/* Show any error or success messages */}
-                <div className=" py-2 bg-white">
-                    <h2 className=" text-red-600">{errorMsg}</h2>
-                    {transactionId &&
-                        <p className=" text-green-500">Your Transaction Id:  {transactionId}</p>
-                    }
-                </div>
+                {
+                    processing ?
+                        <div>
+                            <span className="loading loading-spinner loading-xs"></span>
+                        </div>
+                        :
+                        <div className=" py-2 bg-white">
+                            <h2 className=" text-red-600">{errorMsg}</h2>
+                            {transactionId &&
+                                <p>
+                                    <span className=" text-green-500">Transaction Id:  </span>
+                                    <span className=" text-black font-medium">{transactionId}</span>
+                                </p>
+                            }
+                        </div>
+                }
 
             </form>
         </div>
