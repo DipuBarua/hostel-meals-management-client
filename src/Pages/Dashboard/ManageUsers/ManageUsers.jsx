@@ -2,10 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { FaChessKing } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import useAuth from "../../../hooks/useAuth";
 
 const ManageUsers = () => {
-    const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
 
     const { data: users = [], refetch } = useQuery({
@@ -91,7 +89,7 @@ const ManageUsers = () => {
                                 </th>
 
                                 <th>
-                                    <div className="font-bold">{user.status}</div>
+                                    <div className="font-bold">{user.membership}</div>
                                 </th>
                             </tr>)
                         }

@@ -79,7 +79,7 @@ const CheckoutForm = ({ item }) => {
                 }
 
                 await axiosSecure.post("/payment", paymentInfo)
-                    .then(res => {
+                    .then(async res => {
                         if (res?.data?.insertedId) {
                             Swal.fire({
                                 position: "center",
@@ -89,8 +89,15 @@ const CheckoutForm = ({ item }) => {
                                 timer: 2500
                             });
 
+                            // update user membership status
+                            await axiosSecure.patch(`/user-membership/${user.email}`, { status: item.package_name, })
+                                .then(res => {
+                                    console.log('user membership:', res.data);
+                                })
                         }
                     })
+                    .catch(err => console.log(err));
+
 
                 setProcessing(false);
             }
