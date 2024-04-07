@@ -6,6 +6,7 @@ import { FaHeart } from "react-icons/fa";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { useState } from "react";
 
 const MealDetails = () => {
     const { user } = useAuth();
@@ -70,13 +71,20 @@ const MealDetails = () => {
         }
 
         await axiosSecure.post("/review", reviewInfo)
-            .then(res => {
+            .then(async res => {
                 console.log(res.data);
                 if (res.data.insertedId) {
                     reset();
+
+                    await axiosSecure.patch(`/meal/review/${id}`)
+                        .then(res => {
+                            console.log(res.data);
+                        })
+
                 }
             })
-    }
+    };
+
 
     const { data: reviews = [] } = useQuery({
         queryKey: ['reviews', meal._id],
@@ -84,7 +92,23 @@ const MealDetails = () => {
             const res = await axiosPublic.get(`/reviews/${meal._id}`);
             return res.data;
         }
-    })
+    });
+
+
+    // Like 
+    const [bgLike, setBgLike] = useState("black");
+    const [mood, setMood] = useState(false);
+
+    const handleLike = async () => {
+        await axiosSecure.patch(`/meal/like/${id}`)
+            .then(res => {
+                console.log(res.data);
+                if (res.data.modifiedCount > 0) {
+                    setBgLike("red");
+                    setMood(true);
+                }
+            })
+    }
 
     return (
         <div>
@@ -99,16 +123,13 @@ const MealDetails = () => {
                             <div className="badge badge-outline badge-secondary p-3">Likes:{meal.like}</div>
                         </div>
                         <div className="card-actions justify-end">
-                            {
-                                meal.like === 0 ?
-                                    <button onClick={""} className=" text-3xl">
-                                        <FaHeart className=" "></FaHeart>
-                                    </button>
-                                    :
-                                    <button className=" text-3xl">
-                                        <FaHeart className=" text-red-600"></FaHeart>
-                                    </button>
-                            }
+
+                            <button onClick={() => handleLike()} className=" text-3xl" disabled={mood}>
+                                <FaHeart
+                                    style={{ color: `${bgLike}` }}
+                                ></FaHeart>
+                            </button>
+
                         </div>
                     </div>
 
@@ -159,7 +180,7 @@ const MealDetails = () => {
                 </div>
 
             </div>
-        </div>
+        </div >
     );
 };
 

@@ -1,14 +1,38 @@
 import { FaLeaf, FaRegThumbsUp } from "react-icons/fa";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useState } from "react";
 
 const UpcomingCart = ({ item }) => {
+    const axiosSecure = useAxiosSecure();
+    const [mood, setMood] = useState(false);
+    const [bgLike, setBgLike] = useState("");
+
+    const handleLike = async (id) => {
+        await axiosSecure.patch(`/upcoming-meals/like/${id}`)
+            .then(res => {
+                console.log(res.data);
+                if (res.data.modifiedCount > 0) {
+                    setMood(true);
+                    setBgLike("white");
+                }
+            })
+    }
+
     return (
         <div>
             <div className="card glass rounded-none">
-                <figure><img src={item.image} alt="meal" />
+                <figure>
+                    <img src={item.image} alt="meal" />
                 </figure>
 
-                <button onClick={''} className="text-4xl text-black relative -top-12 left-1">
-                    <FaRegThumbsUp className="absolute hover:text-green-500 bg-gray-600 bg-opacity-20 rounded-full hover:bg-white p-1"></FaRegThumbsUp>
+                <button
+                    onClick={() => handleLike(item._id)}
+                    disabled={mood}
+                    className="text-4xl text-black relative -top-12 left-1">
+                    <FaRegThumbsUp
+                        style={{ background: `${bgLike}` }}
+                        className="absolute bg-gray-500 bg-opacity-30 hover:text-green-500 rounded-full p-1">
+                    </FaRegThumbsUp>
                 </button>
 
 
